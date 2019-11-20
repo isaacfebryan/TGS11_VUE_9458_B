@@ -20,7 +20,7 @@
       </v-list>
       <template v-slot:append>
         <div class="pa-2">
-          <v-btn block>Logout</v-btn>
+          <v-btn block @click="logout()">Logout</v-btn>
         </div>
       </template>
     </v-navigation-drawer>
@@ -45,8 +45,16 @@ export default {
     return {
       drawer: null,
       items: [{ title: "User Controller", icon: "mdi-human-male", name:'UserController'},
-                {title: "Kendaraan Controller", icon: "mdi-car", name:'KendaraanController'}]
+                {title: "Kendaraan Controller", icon: "mdi-car", name:'KendaraanController'},
+                {title: "Login Controller", icon: "mdi-human-male", name:'LoginController'}]
     };
+  },
+  methods: {
+    logout() {
+      localStorage.removeItem("token");
+      this.$router.push({ name: "loginLayout" });
+      alert("Success Logout!");
+    }
   }
 };
 </script>

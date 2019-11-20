@@ -7,6 +7,11 @@ function loadView(view) {
   return () =>
     import(`../components/dashboardContents/${view}.vue`);
 }
+function isAuthenticated() {
+  if (localStorage.getItem('token') == null) {
+    return true;
+  }
+}
 
 const routes = [
   { 
@@ -16,12 +21,33 @@ const routes = [
       {
         name: 'UserController',
         path: 'user',
-        component: loadView('userController')
+        component: loadView('userController'),
+        beforeEnter(to, from, next) {
+          if (!isAuthenticated()) {
+            next();
+          } else {
+            next('/');
+            alert('Please Login to Continue!');
+          }
+        }
       },
       {
         name: 'KendaraanController',
         path: 'kendaraan',
-        component: loadView('kendaraanController')
+        component: loadView('kendaraanController'),
+        beforeEnter(to, from, next) {
+          if (!isAuthenticated()) {
+            next();
+          } else {
+            next('/');
+            alert('Please Login to Continue!');
+          }
+        }
+      },
+      {
+        name: 'LoginController',
+        path: '',
+        component: loadView('loginController')
       }
     ]
   }

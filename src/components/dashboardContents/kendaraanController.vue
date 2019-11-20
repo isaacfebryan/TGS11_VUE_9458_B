@@ -127,8 +127,13 @@ export default {
   },
   methods: {
     getData() {
+      var getToken = {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token")
+        }
+      };
       var uri = this.$apiUrl + "/kendaraan";
-      this.$http.get(uri).then(response => {
+      this.$http.get(uri, getToken).then(response => {
         this.users = response.data.message;
       });
     },
